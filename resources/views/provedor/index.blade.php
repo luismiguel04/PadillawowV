@@ -4,22 +4,29 @@
 Provedor
 @endsection
 
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" class="fondoheader">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
 
-                        <span id="card_title">
-                            {{ __('Provedor') }}
+                        <span id="card_title" style="color:#FFFFFF">
+
+                            {{ __('Provedores') }}
+
                         </span>
 
                         <div class="float-right">
                             <a href="{{ route('provedors.create') }}" class="btn btn-primary btn-sm float-right"
                                 data-placement="left">
                                 {{ __('Crear Nuevo') }}
+                            </a>
+                            <a href="{{ route('/imprimir') }}" class="btn btn-primary btn-sm float-right"
+                                data-placement="left">
+                                {{ __('Imprimir') }}
                             </a>
                         </div>
                     </div>
@@ -52,12 +59,14 @@ Provedor
                                 <tr>
                                     <td>{{ ++$i }}</td>
 
+
                                     <td>{{ $provedor->user->name }}</td>
                                     <td>{{ $provedor->nombre }}</td>
                                     <td>{{ $provedor->direccion }}</td>
                                     <td>{{ $provedor->status }}</td>
 
                                     <td>
+
                                         <form action="{{ route('provedors.destroy',$provedor->id) }}" method="POST"
                                             class="formEliminar">
                                             <a class=" btn btn-sm btn-primary "
@@ -70,6 +79,7 @@ Provedor
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm"> Eliminar</button>
                                         </form>
+
                                     </td>
                                 </tr>
                                 @endforeach
@@ -105,8 +115,8 @@ Provedor
                             this.submit();
                             Swal.fire(
                                 'Borrado!',
-                                'El provedor ha sido borrado.',
-                                'exitosamente'
+                                'El provedor ha sido borrado exitosamente.',
+                                'success'
                             )
                         }
                     })
@@ -115,6 +125,8 @@ Provedor
     })()
     </script>
 </div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
 
 
 @endsection

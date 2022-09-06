@@ -38,15 +38,15 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => public_path('vpagos'),
+            'url' => env('APP_URL') . '/vpagos',
             'visibility' => 'public',
             'throw' => false,
         ],
         'pagos' => [
             'driver' => 'local',
-            'root' => storage_path('app/pagos'),
-            'url' => env('APP_URLS').'/vpagos',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URLS') . '/vpagos',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -76,19 +76,19 @@ return [
     |
     */
 
-   
+
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/pagos'),
     ],
 
     'links' => [
-        public_path('vpagos') => storage_path('vpagos'),
+        public_path('vpagos') => storage_path('app/public'),
     ],
 
-    
-   
-   
-    
+
+
+
+
 
 ];

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Provedor;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /**
  * Class ProvedorController
@@ -74,6 +76,27 @@ class ProvedorController extends Controller
         $provedor = Provedor::find($id);
 
         return view('provedor.show', compact('provedor'));
+    }
+    public function imprimir()
+    {
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $dompdf->setOptions($options);
+
+        $provedors = Provedor::where('status', '=', 'activo')->paginate();
+        $i = (request()->input('page', 1) - 1) * $provedors->perPage();
+
+
+        $pdf = PDF::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true
+        ])->loadView('provedor.pdf', compact('provedors', 'i'))
+            ->setPaper('a4', 'landscape');
+
+
+        //return $pdf->download('provedores.pdf');
+        return $pdf->stream('invoice.pdf');
     }
 
     /**

@@ -5,7 +5,7 @@ Update Pago
 @endsection
 
 @section('content')
-<section class="content container-fluid" id="actualizar">
+<section class="content container-fluid">
     <div class="row">
         <div class="col-md-12">
 
@@ -28,13 +28,15 @@ Update Pago
             </div>
         </div>
     </div>
+    <script>
+
+    </script>
 </section>
 
 <script>
 const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
-
 document.getElementById('provedor_id').addEventListener('change', (e) => {
-    fetch('cuentas', {
+    fetch('rcuentass', {
         method: 'POST',
         body: JSON.stringify({
             texto: e.target.value
@@ -48,7 +50,11 @@ document.getElementById('provedor_id').addEventListener('change', (e) => {
     }).then(data => {
         var opciones = "<option value=''>Elegir</option>";
         for (let i in data.lista) {
-            opciones += '<option value="' + data.lista[i].id + '">' + data.lista[i].cuenta + " " + data
+            opciones += '<option value="' + data.lista[i].id + '">' + "Banco " + data.lista[i].banco +
+                " Moneda " + data.lista[i].moneda +
+                " Cuenta:" + data.lista[
+                    i]
+                .cuenta + " Observaciones: " + data
                 .lista[i].observaciones + '</option>';
         }
         document.getElementById("cuenta_id").innerHTML = opciones;

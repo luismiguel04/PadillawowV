@@ -3,22 +3,57 @@
 @section('template_title')
 Pagos pendientes
 @endsection
+@section('css')
+
+<!-- diseño -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+
+
+<!-- datatable -->
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"> -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+
+<!-- botton -->
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+
+<!-- cdn fontawesom -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+<style>
+.dataTables_length select {
+    padding: 0px !important;
+    width: 60px !important;
+
+}
+</style>
+
+@endsection
 
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="card  ">
+                <div class="card-header ">
+                    <div style="display: flex; justify-content: space-between; align-items: center;  ">
 
-                        <span id="card_title">
+                        <span id="card_title" style="color:#FFFFFF">
                             {{ __('Pago pendientes') }}
                         </span>
 
-                        <div class="float-right">
+                        <div class=" float-right">
                             <a href="creates" class="btn btn-primary btn-sm float-right" data-placement="left">
                                 {{ __('Crear Nuevo') }}
+                            </a>
+                            <a href="{{ route('/imprimirpagos') }}" class="btn btn-danger" data-placement="left">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+
+                            <a href="{{ route('/exportarexcel') }}"
+                                class="btn btn-secondary buttons-excel buttons-html5 btn-success" data-placement="left">
+                                <i class="fas fa-file-excel"></i>
                             </a>
                         </div>
                     </div>
@@ -55,9 +90,9 @@ Pagos pendientes
         </div> --}}
 
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead class="thead">
+                    <div class=" table-responsive">
+                        <table id="example" class="table table-striped table-hover">
+                            <thead>
                                 <tr>
                                     <th>No</th>
 
@@ -72,6 +107,7 @@ Pagos pendientes
                                     <th>Contenedor</th>
                                     <th>Factura</th>
                                     <th>Factura PDF</th>
+                                    <th>Solicitud PDF</th>
                                     <th>Cantidad</th>
                                     <th>Moneda</th>
                                     <th>Obeservacion</th>
@@ -85,8 +121,9 @@ Pagos pendientes
                             </thead>
                             <tbody>
                                 @foreach ($pagos as $pago)
+
                                 <tr>
-                                    <td>{{ ++$i }}</td>
+                                    <td>{{ ++$i}}</td>
 
                                     <td>{{ $pago->user->name }}</td>
                                     <td>{{ $pago->provedor->nombre }}</td>
@@ -98,26 +135,38 @@ Pagos pendientes
                                     <td>{{ $pago->bl }}</td>
                                     <td>{{ $pago->contenedor }}</td>
                                     <td>{{ $pago->factura }}</td>
-                                    <td><a target="_blank" href="{{('vpagos/'). $pago->pago_path}}">PDF</a></td>
-                                    <td><strong>$</strong>{{ $pago->cantidad }}</td>
-                                    <td>{{ $pago->moneda }}</td>
+                                    <td><a target=" _blank" href="{{('vpagos/'). $pago->pago_path}}"><img
+                                                src="app/public/descargav.jpg"></a></td>
+                                    <td><a target="_blank" href="{{('vpagos/'). $pago->solicitud_path}}"><img
+                                                src="app/public/descargav.jpg"></a></td>
+                                    <td>
+                                        <slot>$</slot>{{ number_format($pago->cantidad, 2, ".", ",") }}
+                                    </td>
+                                    <td>{{ $pago->cuenta->moneda }}</td>
                                     <td>{{ $pago->obeservacion }}</td>
                                     <td>{{ $pago->status }}</td>
                                     <td>{{ $pago->obeservacionderev }}</td>
 
 
+
+
                                     <td>
                                         <form action="{{ route('pagos.destroy',$pago->id) }}" method="POST"
                                             class="formEliminar">
-                                            <a class=" btn btn-sm btn-primary "
+                                            <a class=" btn btn-sm btn-primary " title="Mostrar pago"
                                                 href=" {{ route('pagos.show',$pago->id) }}"><i
-                                                    class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                            <a class="btn btn-sm btn-success" href="edits/{{$pago->id}}"><i
-                                                    class="fa fa-fw fa-edit"></i> Editar</a>
+                                                    class="fa fa-fw fa-eye"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-success" title="Editar pago"
+                                                href="edits/{{$pago->id}}"><i class="fa fa-fw fa-edit"></i> </a>
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">
-                                                Eliminar</button>
+                                            <button type="submit" title="Eliminar pago" class="btn btn-sm btn-danger">
+
+
+
+                                                <i class="fa fa-fw fa-trash"></i>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
@@ -143,31 +192,27 @@ Pagos pendientes
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style=" display: flex; justify-content: space-between; align-items: center;">
 
-                        <span id="card_title">
+                        <span id="card_title" style="color:#FFFFFF">
                             {{ __('Pago pagados') }}
                         </span>
 
 
                     </div>
                 </div>
-                @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-                @endif
+
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                        <table id="example2" class="table table-striped" style="width:100%">
                             <thead class="thead">
                                 <tr>
                                     <th>No</th>
 
                                     <th>Usuario </th>
                                     <th>Provedor</th>
-                                    <th>Cuenta</th>
+
                                     <th>Fecha</th>
                                     <th>Referencia</th>
                                     <th>Cliente</th>
@@ -175,10 +220,11 @@ Pagos pendientes
                                     <th>Bl</th>
                                     <th>Contenedor</th>
                                     <th>Factura</th>
+                                    <th>Comprobante</th>
                                     <th>Cantidad</th>
                                     <th>Moneda</th>
 
-                                    <th>Status</th>
+
 
 
                                     <th></th>
@@ -191,7 +237,7 @@ Pagos pendientes
 
                                     <td>{{ $pago->user->name }}</td>
                                     <td>{{ $pago->provedor->nombre }}</td>
-                                    <td>{{ $pago->cuenta->cuenta." ".$pago->cuenta->observaciones }}</td>
+
                                     <td>{{ $pago->fecha }}</td>
                                     <td>{{ $pago->referencia }}</td>
                                     <td>{{ $pago->cliente }}</td>
@@ -199,18 +245,20 @@ Pagos pendientes
                                     <td>{{ $pago->bl }}</td>
                                     <td>{{ $pago->contenedor }}</td>
                                     <td>{{ $pago->factura }}</td>
-                                    <td><strong>$</strong>{{ $pago->cantidad }}</td>
-                                    <td>{{ $pago->moneda }}</td>
+                                    <td>{{ $pago->comprobante_path}}</td>
+                                    <td>
+                                        <slot>$</slot>{{ number_format($pago->cantidad, 2, ".", ",") }}
+                                    </td>
+                                    <td>{{ $pago->cuenta->moneda }}</td>
 
-                                    <td>{{ $pago->status }}</td>
+
 
                                     <td>
                                         <form action="{{ route('pagos.destroy',$pago->id) }}" method="POST">
                                             <a class="btn btn-sm btn-primary "
                                                 href="{{ route('pagos.show',$pago->id) }}"><i
                                                     class="fa fa-fw fa-eye"></i> Mostrar</a>
-                                            <a class="btn btn-sm btn-success" href="edits/{{$pago->id}}"><i
-                                                    class="fa fa-fw fa-edit"></i> Editar</a>
+
 
                                         </form>
                                     </td>
@@ -234,29 +282,25 @@ Pagos pendientes
                 <div class="card-header">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
 
-                        <span id="card_title">
+                        <span id="card_title" style="color:#FFFFFF">
                             {{ __('Pagos Cancelados') }}
                         </span>
 
 
                     </div>
                 </div>
-                @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-                @endif
+
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                        <table id="example3" class="table table-striped" style="width:100%">
                             <thead class="thead">
                                 <tr>
                                     <th>No</th>
 
                                     <th>Usuario </th>
                                     <th>Provedor</th>
-                                    <th>Cuenta</th>
+
                                     <th>Fecha</th>
                                     <th>Referencia</th>
                                     <th>Cliente</th>
@@ -266,8 +310,8 @@ Pagos pendientes
                                     <th>Factura</th>
                                     <th>Cantidad</th>
                                     <th>Moneda</th>
-                                    <th>Obeservacion</th>
-                                    <th>Status</th>
+                                    <th>Obeservacion de la cancelación</th>
+
 
 
                                     <th></th>
@@ -275,13 +319,13 @@ Pagos pendientes
                             </thead>
                             <tbody>
                                 @foreach ($pagosc as $pago)
-                                $pagos = [];
+
                                 <tr>
                                     <td>{{ ++$i }}</td>
 
                                     <td>{{ $pago->user->name }}</td>
                                     <td>{{ $pago->provedor->nombre }}</td>
-                                    <td>{{ $pago->cuenta->cuenta."".$pago->cuenta->observaciones }}</td>
+
                                     <td>{{ $pago->fecha }}</td>
                                     <td>{{ $pago->referencia }}</td>
                                     <td>{{ $pago->cliente }}</td>
@@ -289,13 +333,19 @@ Pagos pendientes
                                     <td>{{ $pago->bl }}</td>
                                     <td>{{ $pago->contenedor }}</td>
                                     <td>{{ $pago->factura }}</td>
-                                    <td><strong>$</strong>{{ $pago->cantidad }}</td>
-                                    <td>{{ $pago->moneda }}</td>
-                                    <td>{{ $pago->obeservacion }}</td>
-                                    <td>{{ $pago->status }}</td>
+                                    <td>
+                                        <slot>$</slot>{{ number_format($pago->cantidad, 2, ".", ",") }}
+                                    </td>
+                                    <td>{{ $pago->cuenta->moneda }}</td>
+                                    <td>{{ $pago->obeservacionderev }}</td>
+
 
                                     <td>
                                         <form action="{{ route('pagos.destroy',$pago->id) }}" method="POST">
+
+
+
+
                                             <a class="btn btn-sm btn-primary "
                                                 href="{{ route('pagos.show',$pago->id) }}"><i
                                                     class="fa fa-fw fa-eye"></i> Mostrar</a>
@@ -349,117 +399,160 @@ Pagos pendientes
 </script>
 
 @endsection
+@section('script')
+
+<!-- diseño -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<!-- datatable -->
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
 
-<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
-</script>
 
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>
+<!-- bottones -->
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
-<script type="text/javascript">
-var data = @json($pagos);
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+
+
+
+
+<script>
+/*   tabla 1 pendientes */
 
 $(document).ready(function() {
     $('#example').DataTable({
-        "data": data,
-        "pageLength": 100,
-        "order": [
-            [0, "desc"]
-        ],
-        "language": {
-            "sProcessing": "Procesando...",
-            "sLengthMenu": "Mostrar MENU registros",
-            "sZeroRecords": "No se encontraron resultados",
-            "sEmptyTable": "Ningún dato disponible en esta tabla",
-            "sInfo": "Mostrando registros del START al END de un total de TOTAL registros",
-            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered": "(filtrado de un total de MAX registros)",
-            "sInfoPostFix": "",
+        language: {
+            "lengthMenu": "Mostrar   _MENU_   registros ",
+            "zeroRecords": "No se encontraron resultados",
+            "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
             "sSearch": "Buscar:",
-            "sUrl": "",
-            "sInfoThousands": ",",
-            "sLoadingRecords": "Cargando...",
             "oPaginate": {
                 "sFirst": "Primero",
                 "sLast": "Último",
                 "sNext": "Siguiente",
                 "sPrevious": "Anterior"
             },
-            "oAria": {
-                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            }
+            "sProcessing": "Procesando...",
         },
-        responsive: true,
-        // dom: 'Bfrtip',
-        dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
-        buttons: [
-            'copy', 'excel',
-            {
-                extend: 'pdfHtml5',
-                orientation: 'landscape',
-                pageSize: 'LETTER',
-            }
 
-        ]
-    })
+        "lengthMenu": [
+            [2, 10, 50, -1],
+            [2, 10, 50, "All"]
+        ],
+        dom: '<"top"lBf>rt<"bottom"pi><"clear">',
 
+        responsive: "true",
+        buttons: [{
+                extend: 'excelHtml5',
+                text: '<i class="fas fa-file-excel"></i> ',
+                titleAttr: 'Exportar a Excel',
+                className: 'btn btn-success'
+            },
+
+
+
+        ],
+
+
+    });
+});
+
+/* tabla 2 pagados */
+
+$(document).ready(function() {
+    $('#example2').DataTable({
+        language: {
+            "lengthMenu": "Mostrar   _MENU_   registros ",
+            "zeroRecords": "No se encontraron resultados",
+            "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "sProcessing": "Procesando...",
+        },
+
+        "lengthMenu": [
+            [2, 10, 50, -1],
+            [2, 10, 50, "All"]
+        ],
+        dom: '<"top"lBf>rt<"bottom"pi><"clear">',
+
+        responsive: "true",
+        buttons: [{
+                extend: 'excelHtml5',
+                text: '<i class="fas fa-file-excel"></i> ',
+                titleAttr: 'Exportar a Excel',
+                className: 'btn btn-success'
+            },
+
+
+
+        ],
+
+
+    });
 });
 
 
-jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-    "portugues-pre": function(data) {
-        var a = 'a';
-        var e = 'e';
-        var i = 'i';
-        var o = 'o';
-        var u = 'u';
-        var c = 'c';
-        var special_letters = {
-            "Á": a,
-            "á": a,
-            "Ã": a,
-            "ã": a,
-            "À": a,
-            "à": a,
-            "É": e,
-            "é": e,
-            "Ê": e,
-            "ê": e,
-            "Í": i,
-            "í": i,
-            "Î": i,
-            "î": i,
-            "Ó": o,
-            "ó": o,
-            "Õ": o,
-            "õ": o,
-            "Ô": o,
-            "ô": o,
-            "Ú": u,
-            "ú": u,
-            "Ü": u,
-            "ü": u,
-            "ç": c,
-            "Ç": c
-        };
-        for (var val in special_letters)
-            data = data.split(val).join(special_letters[val]).toLowerCase();
-        return data;
-    },
-    "portugues-asc": function(a, b) {
-        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-    },
-    "portugues-desc": function(a, b) {
-        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-    }
+/* tabla 3 cancelados */
+
+
+$(document).ready(function() {
+    $('#example3').DataTable({
+        language: {
+            "lengthMenu": "Mostrar   _MENU_   registros ",
+            "zeroRecords": "No se encontraron resultados",
+            "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "sProcessing": "Procesando...",
+        },
+
+        "lengthMenu": [
+            [2, 10, 50, -1],
+            [2, 10, 50, "All"]
+        ],
+        dom: '<"top"lBf>rt<"bottom"pi><"clear">',
+
+        responsive: "true",
+        buttons: [{
+                extend: 'excelHtml5',
+                text: '<i class="fas fa-file-excel"></i> ',
+                titleAttr: 'Exportar a Excel',
+                className: 'btn btn-success'
+            },
+
+
+
+        ],
+
+
+    });
 });
-//"columnDefs": [{ type: 'portugues', targets: "_all" }],
 </script>
+
+
+@endsection

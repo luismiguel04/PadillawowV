@@ -36,6 +36,7 @@ class CuentaController extends Controller
         $cuenta = new Cuenta();
         $user = \Auth::user();
         $cuenta->user_id = $user->id;
+
         $provedores = Provedor::pluck('nombre', 'id');
         return view('cuenta.create', compact('cuenta', 'provedores'));
     }

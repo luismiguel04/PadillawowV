@@ -44,9 +44,10 @@ class Pago extends Model
         'bl' => 'required',
         'contenedor' => 'required',
         'pago_path' => 'mimes:pdf',
+        'comprobante_path' => 'mimes:pdf',
+        'solicitud_path' => 'mimes:pdf',
         'factura' => 'required',
         'cantidad' => 'required',
-        'moneda' => 'required',
         'obeservacion' => 'required',
         'status' => 'required',
     ];
@@ -58,7 +59,7 @@ class Pago extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'provedor_id', 'cuenta_id', 'fecha', 'referencia', 'cliente', 'concepto', 'bl', 'contenedor', 'factura', 'pago_path', 'cantidad', 'moneda', 'obeservacion', 'obeservacionderev', 'status'];
+    protected $fillable = ['user_id', 'provedor_id', 'cuenta_id', 'fecha', 'referencia', 'cliente', 'concepto', 'bl', 'contenedor', 'factura', 'pago_path', 'solicitud_path', 'comprobante_path',  'cantidad', 'moneda', 'obeservacion', 'obeservacionderev', 'status'];
 
 
     /**

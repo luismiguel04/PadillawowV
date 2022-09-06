@@ -12,7 +12,7 @@ Cuenta
                 <div class="card-header">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
 
-                        <span id="card_title">
+                        <span id="card_title" style="color:#FFFFFF">
                             {{ __('Cuenta') }}
                         </span>
 
@@ -83,7 +83,7 @@ Cuenta
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm"><i
-                                                    class="fa fa-fw fa-trash"></i> Elimiar</button>
+                                                    class="fa fa-fw fa-trash"></i> Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -121,7 +121,7 @@ Cuenta
                             Swal.fire(
                                 'Borrado!',
                                 'La cuenta ha sido borrado.',
-                                'exitosamente'
+                                'success'
                             )
                         }
                     })

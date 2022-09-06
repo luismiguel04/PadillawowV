@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Models\Pago;
 use App\Models\Cuenta;
 use App\Models\Provedor;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Yajra\DataTables\Services\DataTable;
+
+
+use Maatwebsite\Excel\Facades\Excel;
 
 
 /**
@@ -70,12 +77,24 @@ class PagoController extends Controller
         $pago_file = $request->file('pago_path');
         $pagoname = $pago->pago_path->getClientOriginalName();
         $rutafile = time() . $pagoname;
-        \Storage::disk('pagos')->put(
+        \Storage::disk('public')->put(
             $rutafile,
             \File::get($pago_file)
         );
         $pago->pago_path = $rutafile;
         $rutafile = time() . $pagoname;
+
+
+
+        $solicitud_file = $request->file('solicitud_path');
+        $solicitudname = $pago->solicitud_path->getClientOriginalName();
+        $rutafile = time() . $solicitudname;
+        \Storage::disk('public')->put(
+            $rutafile,
+            \File::get($solicitud_file)
+        );
+        $pago->solicitud_path = $rutafile;
+        $rutafile = time() . $solicitudname;
 
 
 
@@ -118,6 +137,28 @@ class PagoController extends Controller
         return view('pago.edit', compact('pago', 'provedores', 'cuentas'));
     }
 
+    public function imprimir()
+    {
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $dompdf->setOptions($options);
+
+        $pagos = Pago::where('status', '<', 3)->paginate();
+        $i = (request()->input('page', 1) - 1) * $pagos->perPage();
+
+
+        $pdf = PDF::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true
+        ])->loadView('pago.pdf', compact('pagos', 'i'))
+            ->setPaper('a3', 'landscape');
+
+
+        //return $pdf->download('provedores.pdf');
+        return $pdf->stream('invoice.pdf');
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -144,7 +185,7 @@ class PagoController extends Controller
     {
         $pago = Pago::find($id);
         if ($pago) {
-            $pago->status = 3;
+            $pago->status = 4;
             $pago->update();
             return redirect()->route('pagos.index')
                 ->with('success', 'Pago eliminado exitosamente');
@@ -195,7 +236,18 @@ class PagoController extends Controller
 
     public function getPago($filename)
     {
-        $file = \Storage::disk('pagos')->get($filename);
+        $file = \storage::disk('public')->get($filename);
         return new Response($file, 200);
+    }
+
+    public function getSolicitud($filename)
+    {
+        $file = \storage::disk('public')->get($filename);
+        return new Response($file, 200);
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'pagos.xlsx');
     }
 }

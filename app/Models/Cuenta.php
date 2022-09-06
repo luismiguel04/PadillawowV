@@ -71,9 +71,11 @@ class Cuenta extends Model
     {
         return $this->hasOne('App\Models\Provedor', 'id', 'provedor_id');
     }
+
+
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'id', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
     public function categoria()
     {

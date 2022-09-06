@@ -1,6 +1,8 @@
 <div class="box box-info padding-1">
     <div class="box-body">
 
+
+
         <div class="form-group">
             {{ Form::label('usuario') }}
             {{ Form::text('user_id', $pago->user_id, ['class' => 'form-control' . ($errors->has('user_id') ? ' is-invalid' : ''), 'placeholder' => 'User Id']) }}
@@ -38,28 +40,34 @@
             </select>
         </div>
         <div class="form-group">
-            {{ Form::label('cuenta') }}
-            <br>
-            <select name="cuenta_id" id="cuenta_id" class="from-control">
-                <option>Seleccionar cuenta</option>
+            {{ Form::label('cuentas') }}
+            <select name="cuenta_id" id="cuenta_id" class="form-control">
+                <option>Seleccionar provedor</option>
                 @foreach ($cuentas as $item)
                 <option value="{{ $item->id }}" @if($pago->cuenta_id=== $item->id) " selected='selected'
-                    @endif>{{ $item->cuenta}}{{" Observaciones: "}}{{ $item->observaciones}}
+                    @endif>{{ $item->banco }}{{" : "}}{{ $item->cuenta }}
                 </option>
                 @endforeach
-
             </select>
-            <br>
-
-
         </div>
 
 
 
+
+
         <div class="form-group">
-            {{ Form::label('fecha') }}
-            {{ Form::date('fecha', $pago->fecha, ['class' => 'form-control' . ($errors->has('fecha') ? ' is-invalid' : ''), 'placeholder' => 'Fecha']) }}
-            {!! $errors->first('fecha', '<div class="invalid-feedback">:message</div>') !!}
+            <label class="col-sm-2 col-form-label">{{ __('fecha') }}</label>
+            <div>
+                <div class="form-group{{ $errors->has('fecha') ? ' has-danger' : '' }}">
+                    <input class="form-control{{ $errors->has('fecha') ? ' is-invalid' : '' }}" name="fecha"
+                        id="input-fecha" type="date" placeholder="{{ __('fecha') }}"
+                        value="{{ old('fecha',$pago->fecha) }}" required />
+                    @if ($errors->has('fecha'))
+                    <span id="fecha-error" class="error text-danger"
+                        for="input-fecha">{{ $errors->first('fecha') }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="form-group">
             {{ Form::label('referencia') }}
@@ -97,17 +105,22 @@
             {{ Form::text('cantidad', $pago->cantidad, ['class' => 'form-control' . ($errors->has('cantidad') ? ' is-invalid' : ''), 'placeholder' => 'Cantidad']) }}
             {!! $errors->first('cantidad', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <br>
         <div class="form-group">
-            {{ Form::label('moneda') }}
-            {{ Form::text('moneda', $pago->moneda, ['class' => 'form-control' . ($errors->has('moneda') ? ' is-invalid' : ''), 'placeholder' => 'Moneda']) }}
-            {!! $errors->first('moneda', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('sube el pago') }}
+            {{ Form::label('sube la factura a pagar') }}
 
             <input type="file" name="pago_path" id="pago_path" class="hidden">
 
         </div>
+        <br>
+
+        <div class="form-group">
+            {{ Form::label('sube la solicitud de pago') }}
+
+            <input type="file" name="solicitud_path" id="solicitud_path" class="hidden">
+
+        </div>
+        <br>
         <div class="form-group">
             {{ Form::label('obeservacion') }}
             {{ Form::text('obeservacion', $pago->obeservacion, ['class' => 'form-control' . ($errors->has('obeservacion') ? ' is-invalid' : ''), 'placeholder' => 'Obeservacion']) }}
@@ -128,6 +141,8 @@
 
             </select>
         </div>
+
+
         <div class="form-group">
             {{ Form::label('obeservaciones de revisión') }}
             {{ Form::text('obeservacionderev', $pago->obeservacionderev, ['class' => 'form-control' . ($errors->has('obeservacionderev') ? ' is-invalid' : ''), 'placeholder' => 'obeservaciones de la revisión se llena por el personal de administración']) }}

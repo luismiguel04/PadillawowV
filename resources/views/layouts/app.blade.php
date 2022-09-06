@@ -8,7 +8,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'padillawow') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}
+
+    </title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -16,22 +18,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-
+    @yield('css')
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.css" />
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-
 
 </head>
 
@@ -40,8 +29,10 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Inicio') }}
+
+                    <img src="http://192.168.1.67/padillawow/public/app/public/logo2.png">
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -50,32 +41,24 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+
+                    @auth
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('provedors.index') }}">{{ __('provedores') }}</a>
+                        @if ( Auth::user()->role=='2' )
+                        <li class="navbar-brand">
+                            <a class="nav-link" href="{{ route('provedors.index') }}">{{ __('Provedores') }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cuentas.index') }}">{{ __('cuentas') }}</a>
+                        <li class="navbar-brand">
+                            <a class="nav-link" href="{{ route('cuentas.index') }}">{{ __('Cuentas') }}</a>
                         </li>
-                        <ul class="navbar-nav me-auto">
-
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('pagos.index') }}">{{ __('Pagos Marcelo') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('pagos.index') }}">{{ __('Pagos Adoucomer') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{{ route('pagos.index') }}">{{ __('Pagos Grupo Padilla') }}</a>
-                            </li>
-                        </ul>
-
+                        @endif
+                        <li class="navbar-brand">
+                            <a class="nav-link" href="{{ route('pagos.index') }}">{{ __('pagos') }}</a>
+                        </li>
 
 
                     </ul>
-
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -116,12 +99,14 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
     </div>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('script')
+    @stack('js')
 </body>
+
+<main class="py-4">
+    @yield('content')
+</main>
 
 </html>
