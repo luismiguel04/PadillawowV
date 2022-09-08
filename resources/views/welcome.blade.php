@@ -405,7 +405,7 @@
 </head>
 
 <body class="antialiased">
-    <div style=" background-image: url( http://192.168.1.67/padillawow/public/app/public/fondo.jpg" );
+    <div style=" background-image: url( http://138.197.202.215/app/public/fondo.jpg" );
         class=" relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
         @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">

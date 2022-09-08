@@ -30,7 +30,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
 
-                    <img src="http://192.168.1.67/padillawow/public/app/public/logo2.png">
+                    <img src="http://138.197.202.215/app/public/logo2.png">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
