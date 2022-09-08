@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="float-left">
-                        <span class="card-title">Mostrar Pago</span>
+                        <span class="card-title" style="color:#FFFFFF">Mostrar Pago</span>
                     </div>
                     <div class="float-right">
                         <a class="btn btn-primary" href="{{ route('pagos.index') }}"> Regresar</a>
@@ -101,8 +101,7 @@
                             </div>
                         </div>
                     </div>
-                    <iframe src="{{('http://localhost/padillawow/public/vpagos/'). $pago->pago_path}}" width="100%"
-                        height="800px">
+                    <iframe src="{{('http://localhost/padillawow/public/vpagos/'). $pago->pago_path}}" width="100%" height="800px">
 
                 </div>
             </div>
