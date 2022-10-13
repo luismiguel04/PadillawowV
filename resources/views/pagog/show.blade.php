@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <strong>Cantidad:</strong>
-				<slot>$</slot>{{ number_format($pago->cantidad, 2, ".", ",") }}
+                                {{ $pago->cantidad }}
                             </div>
                             <div class="form-group">
                                 <strong>Clave:</strong>
@@ -121,7 +121,6 @@
                                     <iframe id="container-form"
                                         src="{{('http://138.197.202.215/verpagos/'). $pago->pago_path}}" width="100%"
                                         height="600px"></iframe>
-                                   
 
                                 </div>
                                 <div class="col-md-6">

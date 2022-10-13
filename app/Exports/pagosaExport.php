@@ -3,23 +3,23 @@
 namespace App\Exports;
 
 
-use App\Models\Pago;
-use App\Models\Pagog;
+use App\Models\Pagoa;
+
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 
 
-class UsersExport implements FromView, ShouldAutoSize
+class pagosaExport implements FromView, ShouldAutoSize
 
 {
     public function view(): View
     {
-        $pagos = Pago::where('status', '<', 3)->paginate();
+        $pagos = Pagoa::where('status', '<', 3)->paginate();
         $i = (request()->input('page', 1) - 1) * $pagos->perPage();
-        return view('pago.excel', [
-            'pagos' => Pago::all()
+        return view('pagoa.excel', [
+            'pagos' => Pagoa::all()
         ], compact('i'));
     }
 }

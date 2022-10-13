@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-Pagos pendientes marcelo padilla
+Pagos pendientes Aduocomer
 @endsection
 @section('css')
 
@@ -40,18 +40,18 @@ Pagos pendientes marcelo padilla
                     <div style="display: flex; justify-content: space-between; align-items: center;  ">
 
                         <span id="card_title" style="color:#FFFFFF">
-                            {{ __('Pagos Pendientes Marcelo Padilla') }}
+                            {{ __('Pagos Pendientes Aduocomer') }}
                         </span>
 
                         <div class=" float-right">
-                            <a href="creates" class="btn btn-primary btn-sm float-right" data-placement="left">
+                            <a href="createsa" class="btn btn-primary btn-sm float-right" data-placement="left">
                                 {{ __('Crear Nuevo') }}
                             </a>
-                            <a href="{{ route('/imprimirpagos') }}" class="btn btn-danger" data-placement="left">
+                            <a href="{{ route('/imprimirpagosa') }}" class="btn btn-danger" data-placement="left">
                                 <i class="fas fa-file-pdf"></i>
                             </a>
 
-                            <a href="{{ route('/exportarexcel') }}"
+                            <a href="{{ route('/exportarexcela') }}"
                                 class="btn btn-secondary buttons-excel buttons-html5 btn-success" data-placement="left">
                                 <i class="fas fa-file-excel"></i>
                             </a>
@@ -151,14 +151,14 @@ Pagos pendientes marcelo padilla
 
 
                                     <td>
-                                        <form action="{{ route('pagos.destroy',$pago->id) }}" method="POST"
+                                        <form action="{{ route('pagoas.destroy',$pago->id) }}" method="POST"
                                             class="formEliminar">
                                             <a class=" btn btn-sm btn-primary " title="Mostrar pago"
-                                                href=" {{ route('pagos.show',$pago->id) }}"><i
+                                                href=" {{ route('pagoas.show',$pago->id) }}"><i
                                                     class="fa fa-fw fa-eye"></i>
                                             </a>
                                             <a class="btn btn-sm btn-success" title="Editar pago"
-                                                href="edits/{{$pago->id}}"><i class="fa fa-fw fa-edit"></i> </a>
+                                                href="editsa/{{$pago->id}}"><i class="fa fa-fw fa-edit"></i> </a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" title="Eliminar pago" class="btn btn-sm btn-danger">
@@ -195,7 +195,7 @@ Pagos pendientes marcelo padilla
                     <div style=" display: flex; justify-content: space-between; align-items: center;">
 
                         <span id="card_title" style="color:#FFFFFF">
-                            {{ __('Pagos Pagados Marcelo Padilla') }}
+                            {{ __('Pagos Pagados Aduocomer') }}
                         </span>
 
 
@@ -211,7 +211,7 @@ Pagos pendientes marcelo padilla
                                     <th>No</th>
 
                                     <th>Usuario </th>
-                                    <th>Provedor</th>
+                                    <th>Proveedor</th>
 
                                     <th>Fecha</th>
                                     <th>Referencia</th>
@@ -245,7 +245,7 @@ Pagos pendientes marcelo padilla
                                     <td>{{ $pago->bl }}</td>
                                     <td>{{ $pago->contenedor }}</td>
                                     <td>{{ $pago->factura }}</td>
-                                     <td><a target="_blank" href="{{('verpagos/'). $pago->comprobante_path}}"><img
+                                    <td><a target="_blank" href="{{('verpagos/'). $pago->comprobante_path}}"><img
                                                 src="app/public/descargav.jpg"></a></td>
                                     <td>
                                         <slot>$</slot>{{ number_format($pago->cantidad, 2, ".", ",") }}
@@ -255,9 +255,9 @@ Pagos pendientes marcelo padilla
 
 
                                     <td>
-                                        <form action="{{ route('pagos.destroy',$pago->id) }}" method="POST">
+                                        <form action="{{ route('pagoas.destroy',$pago->id) }}" method="POST">
                                             <a class="btn btn-sm btn-primary "
-                                                href="{{ route('pagos.show',$pago->id) }}"><i
+                                                href="{{ route('pagoas.show',$pago->id) }}"><i
                                                     class="fa fa-fw fa-eye"></i> Mostrar</a>
 
 
@@ -284,7 +284,7 @@ Pagos pendientes marcelo padilla
                     <div style="display: flex; justify-content: space-between; align-items: center;">
 
                         <span id="card_title" style="color:#FFFFFF">
-                            {{ __('Pagos Cancelados Marcelo Padilla') }}
+                            {{ __('Pagos Cancelados Aduocomer') }}
                         </span>
 
 
@@ -300,7 +300,7 @@ Pagos pendientes marcelo padilla
                                     <th>No</th>
 
                                     <th>Usuario </th>
-                                    <th>Provedor</th>
+                                    <th>Proveedor</th>
 
                                     <th>Fecha</th>
                                     <th>Referencia</th>
@@ -342,13 +342,13 @@ Pagos pendientes marcelo padilla
 
 
                                     <td>
-                                        <form action="{{ route('pagos.destroy',$pago->id) }}" method="POST">
+                                        <form action="{{ route('pagoas.destroy',$pago->id) }}" method="POST">
 
 
 
 
                                             <a class="btn btn-sm btn-primary "
-                                                href="{{ route('pagos.show',$pago->id) }}"><i
+                                                href="{{ route('pagoas.show',$pago->id) }}"><i
                                                     class="fa fa-fw fa-eye"></i> Mostrar</a>
 
 

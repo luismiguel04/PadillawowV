@@ -8,8 +8,8 @@
         </div>
 
         <div class="form-group">
-            {{ Form::label('provedor') }}
-            {{ Form::select('provedor_id', $provedores ,$cuenta->provedor_id, ['class' => 'form-control' . ($errors->has('provedor_id') ? ' is-invalid' : ''), 'placeholder' => 'seleccione un provedor']) }}
+            {{ Form::label('proveedor') }}
+            {{ Form::select('provedor_id', $provedores ,$cuenta->provedor_id, ['class' => 'form-control' . ($errors->has('provedor_id') ? ' is-invalid' : ''), 'placeholder' => 'seleccione un proveedor']) }}
             {!! $errors->first('seleccione un provedor', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -23,8 +23,8 @@
             {!! $errors->first('sucursal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('direccion') }}
-            {{ Form::text('direccion', $cuenta->direccion, ['class' => 'form-control' . ($errors->has('direccion') ? ' is-invalid' : ''), 'placeholder' => 'Direccion']) }}
+            {{ Form::label('dirección') }}
+            {{ Form::text('direccion', $cuenta->direccion, ['class' => 'form-control' . ($errors->has('direccion') ? ' is-invalid' : ''), 'placeholder' => 'Dirección']) }}
             {!! $errors->first('direccion', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -61,6 +61,7 @@
 
     </div>
     <div class="box-footer mt20">
+        <br>
         <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
 </div>

@@ -22,9 +22,9 @@ class ProvedorController extends Controller
     public function index()
     {
         $provedors = Provedor::paginate();
-
-        return view('provedor.index', compact('provedors'))
-            ->with('i', (request()->input('page', 1) - 1) * $provedors->perPage());
+            $i=0;
+        return view('provedor.index', compact('provedors','i'));
+          //  ->with('i', (request()->input('page', 1) - 1) * $provedors->perPage());
     }
 
     /**
@@ -95,8 +95,8 @@ class ProvedorController extends Controller
             ->setPaper('a4', 'landscape');
 
 
-        //return $pdf->download('provedores.pdf');
-        return $pdf->stream('invoice.pdf');
+       // return $pdf->download('provedores.pdf');
+       return $pdf->stream('Provedores.pdf');
     }
 
     /**

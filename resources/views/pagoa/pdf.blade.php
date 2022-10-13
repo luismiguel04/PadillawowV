@@ -11,7 +11,7 @@
 
 
                             <h2 style="text-align: center">
-                                {{ __('Pagos pendientes Marcelo Padillawow') }}
+                                {{ __('Pagos pendientes Aduocomer Padillawow') }}
                             </h2>
                         </span>
 
@@ -33,7 +33,7 @@
                             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                         <div class="modal-body">
+                        <div class="modal-body">
                             ...
                         </div>
                         <div class="modal-footer">
@@ -63,11 +63,16 @@
                                     <th>Bl</th>
                                     <th>Contenedor</th>
                                     <th>Factura</th>
+
                                     <th>Cantidad</th>
                                     <th>Moneda</th>
                                     <th>Obeservacion</th>
                                     <th>Status</th>
                                     <th>Obeservacion de revisión</th>
+
+
+
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,8 +82,8 @@
 
                                     <td>{{ $pago->user->name }}</td>
                                     <td>{{ $pago->provedor->nombre }}</td>
-                                    <td>{{ $pago->cuenta->banco }}</td>
-                                    <td>{{"Cuenta:". $pago->cuenta->cuenta ." Clabe: ".$pago->cuenta->clave ." Sucursal:".
+                                    <td>{{ $pago->cuenta->banco}}</td>
+                                      <td>{{"Cuenta:". $pago->cuenta->cuenta ." Clabe: ".$pago->cuenta->clave ." Sucursal:".
                                         $pago->cuenta->sucursal." Dirección: ".$pago->cuenta->direccion. " Swifts:".$pago->cuenta->swifts.
                                          " Aba: ".$pago->cuenta->aba." observaciones: ".$pago->cuenta->observaciones }}</td>
                                     <td>{{ $pago->fecha }}</td>

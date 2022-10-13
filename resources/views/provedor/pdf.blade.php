@@ -6,7 +6,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center;">
 
                         <span id="card_title">
-                            <img src="http://192.168.1.67/padillawow/public/app/public/logo2.png"
+                            <img src="http://138.197.202.215/app/public/logo2.png"
                                 style="text-align: center" />
 
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-Create Pago
+Create Pago  Grupo padilla
 @endsection
 
 @section('content')
@@ -13,13 +13,13 @@ Create Pago
 
             <div class="card card-default">
                 <div class="card-header">
-                    <span class="card-title" style="color:#FFFFFF">Crear Pago</span>
+                    <span class="card-title" style="color:#FFFFFF">Crear Pago grupo padilla</span>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('pagos.store') }}" role="form" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('pagogs.store') }}" role="form" enctype="multipart/form-data">
                         @csrf
 
-                        @include('pago.form')
+                        @include('pagog.form')
 
                     </form>
                 </div>

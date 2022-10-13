@@ -13,7 +13,7 @@ Editar Provedor
 
             <div class="card card-default">
                 <div class="card-header">
-                    <span class="card-title" style="color:#FFFFFF">Editar Provedor</span>
+                    <span class="card-title" style="color:#FFFFFF">Editar Proveedor</span>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('provedors.update', $provedor->id) }}" role="form"

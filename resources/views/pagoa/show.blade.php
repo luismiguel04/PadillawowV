@@ -121,7 +121,7 @@
                                     <iframe id="container-form"
                                         src="{{('http://138.197.202.215/verpagos/'). $pago->pago_path}}" width="100%"
                                         height="600px"></iframe>
-                                   
+
 
                                 </div>
                                 <div class="col-md-6">

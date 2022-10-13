@@ -20,10 +20,11 @@ class CuentaController extends Controller
      */
     public function index()
     {
-        $cuentas = Cuenta::paginate();
+        $cuentas = Cuenta::all();
+	 $i=0;
+        return view('cuenta.index', compact('cuentas','i'));
+            //->with('i', (request()->input('page', 1) - 1) * $cuentas->perPage());
 
-        return view('cuenta.index', compact('cuentas'))
-            ->with('i', (request()->input('page', 1) - 1) * $cuentas->perPage());
     }
 
     /**

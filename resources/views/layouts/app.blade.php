@@ -33,9 +33,7 @@
                     <img src="http://138.197.202.215/app/public/logo2.png">
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -53,8 +51,15 @@
                         </li>
                         @endif
                         <li class="navbar-brand">
-                            <a class="nav-link" href="{{ route('pagos.index') }}">{{ __('pagos') }}</a>
+                            <a class="nav-link" href="{{ route('pagos.index') }}">{{ __('Pagos Marcelo') }}</a>
                         </li>
+                        <li class="navbar-brand">
+                            <a class="nav-link" href="{{ route('pagoas.index') }}">{{ __('Pagos Aduocomer') }}</a>
+                        </li>
+                        <li class="navbar-brand">
+                            <a class="nav-link" href="{{ route('pagogs.index') }}">{{ __('Pagos Grupo Padilla') }}</a>
+                        </li>
+
 
 
                     </ul>
@@ -77,8 +82,7 @@
                         @endif
                         @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
 

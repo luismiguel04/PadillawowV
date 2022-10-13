@@ -4,16 +4,8 @@
             <div class="card">
                 <div class="card-header">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <img src="app/public/logo2.png">
 
-                        <span id="card_title">
-                            <img src="http://138.197.202.215/app/public/logo2.png"
-                                style="text-align: center" />
-
-
-                            <h2 style="text-align: center">
-                                {{ __('Pagos pendientes Marcelo Padillawow') }}
-                            </h2>
-                        </span>
 
 
                     </div>
@@ -33,7 +25,7 @@
                             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                         <div class="modal-body">
+                        <div class="modal-body">
                             ...
                         </div>
                         <div class="modal-footer">
@@ -54,7 +46,6 @@
 
                                     <th>Usuario </th>
                                     <th>Provedor</th>
-                                    <th>Banco</th>
                                     <th>Cuenta</th>
                                     <th>Fecha</th>
                                     <th>Referencia</th>
@@ -63,11 +54,16 @@
                                     <th>Bl</th>
                                     <th>Contenedor</th>
                                     <th>Factura</th>
+
                                     <th>Cantidad</th>
                                     <th>Moneda</th>
                                     <th>Obeservacion</th>
                                     <th>Status</th>
                                     <th>Obeservacion de revisión</th>
+
+
+
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,10 +73,7 @@
 
                                     <td>{{ $pago->user->name }}</td>
                                     <td>{{ $pago->provedor->nombre }}</td>
-                                    <td>{{ $pago->cuenta->banco }}</td>
-                                    <td>{{"Cuenta:". $pago->cuenta->cuenta ." Clabe: ".$pago->cuenta->clave ." Sucursal:".
-                                        $pago->cuenta->sucursal." Dirección: ".$pago->cuenta->direccion. " Swifts:".$pago->cuenta->swifts.
-                                         " Aba: ".$pago->cuenta->aba." observaciones: ".$pago->cuenta->observaciones }}</td>
+                                    <td>{{ $pago->cuenta->cuenta." ".$pago->cuenta->observaciones }}</td>
                                     <td>{{ $pago->fecha }}</td>
                                     <td>{{ $pago->referencia }}</td>
                                     <td>{{ $pago->cliente }}</td>
@@ -89,7 +82,7 @@
                                     <td>{{ $pago->contenedor }}</td>
                                     <td>{{ $pago->factura }}</td>
                                     <td>
-                                        <slot>$</slot>{{ number_format($pago->cantidad, 2, ".", ",") }}
+                                        {{ number_format($pago->cantidad, 2, ".", ",") }}
                                     </td>
                                     <td>{{ $pago->cuenta->moneda }}</td>
                                     <td>{{ $pago->obeservacion }}</td>

@@ -9,8 +9,8 @@
             {!! $errors->first('user_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <!--  <div class="form-group">
-            {{ Form::label('provedor') }}
-            {{ Form::select('provedor_id',$provedores, $pago->provedor_id, ['class' => 'form-control' . ($errors->has('provedor_id') ? ' is-invalid' : ''), 'placeholder' => 'seleccione un proveedor']) }}
+            {{ Form::label('proveedor') }}
+            {{ Form::select('provedor_id',$provedores, $pago->provedor_id, ['class' => 'form-control' . ($errors->has('provedor_id') ? ' is-invalid' : ''), 'placeholder' => 'seleccione un provedor']) }}
             {!! $errors->first('provedor_id', '<div class="invalid-feedback">:message</div>') !!}
         </div> -->
         <!--     <div class="form-group">
@@ -42,7 +42,7 @@
         <div class="form-group">
             {{ Form::label('cuentas') }}
             <select name="cuenta_id" id="cuenta_id" class="form-control">
-                <option>Selecciona una cuenta</option>
+                <option>Seleccionar cuenta</option>
                 @foreach ($cuentas as $item)
                 <option value="{{ $item->id }}" @if($pago->cuenta_id=== $item->id) " selected='selected'
                     @endif>{{ $item->banco }}{{" : "}}{{ $item->cuenta }}
@@ -117,7 +117,7 @@
         <div class="form-group">
             {{ Form::label('sube la solicitud de pago') }}
 
-            <input type="file" name="solicitud_path" id="solicitud_path" class="form-control" >
+            <input type="file" name="solicitud_path" id="solicitud_path" class="form-control">
 
         </div>
         <br>
@@ -128,7 +128,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('status') }}
-        <select name="status" id="status" class="form-control"  required>
+            <select name="status" id="status" class="form-control" required>
 
 
                 <option value="">Seleccionar status</option>
@@ -141,12 +141,12 @@
 
             </select>
         </div>
-             <br>
+              <br>
 
         <div class="form-group">
             {{ Form::label('sube el comprobante de pago') }}
 
-            <input type="file" name="comprobante_path" id="comprobante_path" class="form-control" >
+            <input type="file" name="comprobante_path" id="comprobante_path" class="form-control">
 
         </div>
         <br>

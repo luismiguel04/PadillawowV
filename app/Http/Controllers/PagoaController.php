@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\UsersExport;
-use App\Models\Pago;
+use App\Exports\pagosaExport;
+use App\Models\Pagoa;
 use App\Models\Cuenta;
 use App\Models\Provedor;
 use Illuminate\Http\Request;
@@ -17,10 +17,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 
 /**
- * Class PagoController
+ * Class PagoaController
  * @package App\Http\Controllers
  */
-class PagoController extends Controller
+class PagoaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,15 +30,15 @@ class PagoController extends Controller
     public function index()
     {
 
-        $pagos = Pago::where('status', '<', 3)->paginate();
+        $pagos = Pagoa::where('status', '<', 3)->paginate();
 
 
 
-        $pagosp = Pago::where('status', '=', 3)->paginate();
+        $pagosp = Pagoa::where('status', '=', 3)->paginate();
 
-        $pagosc = Pago::where('status', '=', 4)->paginate();
+        $pagosc = Pagoa::where('status', '=', 4)->paginate();
 
-        return view('pago.index', compact('pagos', 'pagosp', 'pagosc'))
+        return view('pagoa.index', compact('pagos', 'pagosp', 'pagosc'))
             ->with('i', (request()->input('page', 1) - 1) * $pagos->perPage());
     }
 
@@ -49,14 +49,14 @@ class PagoController extends Controller
      */
     public function create()
     {
-        $pago = new Pago();
+        $pago = new Pagoa();
         $user = \Auth::user();
         $pago->user_id = $user->id;
         // $provedores =Provedor::pluck('nombre','id' );
         $provedores = Provedor::all();
         $cuentas = Cuenta::all();
 
-        return view('pago.create', compact('pago', 'provedores', 'cuentas'));
+        return view('pagoa.create', compact('pago', 'provedores', 'cuentas'));
     }
 
     /**
@@ -67,12 +67,12 @@ class PagoController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Pago::$rules);
+        request()->validate(Pagoa::$rules);
         //$pago = new Pago();
 
 
 
-        $pago = Pago::create($request->all());
+        $pago = Pagoa::create($request->all());
 
         $pago_file = $request->file('pago_path');
         $pagoname = $pago->pago_path->getClientOriginalName();
@@ -97,13 +97,11 @@ class PagoController extends Controller
         $rutafile = time() . $solicitudname;
 
 
-
-
         $pago->save();
 
 
 
-        return redirect()->route('pagos.index')
+        return redirect()->route('pagoas.index')
             ->with('success', 'Pago creado exitosamente.');
     }
 
@@ -115,9 +113,9 @@ class PagoController extends Controller
      */
     public function show($id)
     {
-        $pago = Pago::find($id);
+        $pago = Pagoa::find($id);
 
-        return view('pago.show', compact('pago'));
+        return view('pagoa.show', compact('pago'));
     }
 
     /**
@@ -128,10 +126,10 @@ class PagoController extends Controller
      */
     public function edit($id)
     {
-        $pago = Pago::find($id);
+        $pago = Pagoa::find($id);
         $provedores = Provedor::all();
         $cuentas = Cuenta::all();
-        return view('pago.edit', compact('pago', 'provedores', 'cuentas'));
+        return view('pagoa.edit', compact('pago', 'provedores', 'cuentas'));
     }
 
     public function imprimir()
@@ -141,48 +139,49 @@ class PagoController extends Controller
         $options->setDefaultFont('Courier');
         $dompdf->setOptions($options);
 
-        $pagos = Pago::where('status', '<', 3)->paginate();
+        $pagos = Pagoa::where('status', '<', 3)->paginate();
         $i = (request()->input('page', 1) - 1) * $pagos->perPage();
 
 
         $pdf = PDF::setOptions([
             'isHtml5ParserEnabled' => true,
             'isRemoteEnabled' => true
-        ])->loadView('pago.pdf', compact('pagos', 'i'))
+        ])->loadView('pagoa.pdf', compact('pagos', 'i'))
             ->setPaper('a2', 'landscape');
 
 
         //return $pdf->download('provedores.pdf');
-        return $pdf->stream('invoice.pdf');
-    }
+        return $pdf->stream('pagos aduocomer.pdf');
+
+ }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Pago $pago
+     * @param  Pagoa $pago
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pago $pago)
+    public function update(Request $request, Pagoa $pagoa)
     {
-        request()->validate(Pago::$rules);
-        $pago->update($request->all());
-if($pago->comprobante_path != null){
+        request()->validate(Pagoa::$rules);
+
+        $pagoa->update($request->all());
+if($pagoa->comprobante_path != null){
         $comprobante_file = $request->file('comprobante_path');
-        $comprobantename = $pago->comprobante_path->getClientOriginalName();
+        $comprobantename = $pagoa->comprobante_path->getClientOriginalName();
         $rutafile = time() . $comprobantename;
         \Storage::disk('pagos')->put(
             $rutafile,
             \File::get($comprobante_file)
         );
-        $pago->comprobante_path = $rutafile;
-        $rutafile = time() .$comprobantename;
-
+        $pagoa->comprobante_path = $rutafile;
+        $rutafile = time() . $comprobantename;
 }
-         $pago->save();
 
+       $pagoa->save();
 
-        return redirect()->route('pagos.index')
+        return redirect()->route('pagoas.index')
             ->with('success', 'Pago actualizado exitosamente');
     }
 
@@ -193,14 +192,14 @@ if($pago->comprobante_path != null){
      */
     public function destroy($id)
     {
-        $pago = Pago::find($id);
+        $pago = Pagoa::find($id);
         if ($pago) {
             $pago->status = 4;
             $pago->update();
-            return redirect()->route('pagos.index')
+            return redirect()->route('pagoas.index')
                 ->with('success', 'Pago eliminado exitosamente');
         } else {
-            return redirect()->route('pagos.index')->with(array(
+            return redirect()->route('pagoas.index')->with(array(
                 "message" => "El video que trata de eliminar no existe"
             ));
         }
@@ -210,7 +209,7 @@ if($pago->comprobante_path != null){
     {
         if (isset($request->texto)) {
             $cuentas = Cuenta::whereprovedor_id($request->texto)
- 				->where('status','=', 1)->get();
+		               ->where('status','=', 1)->get();
             return response()->json(
                 [
                     'lista' => $cuentas,
@@ -230,7 +229,7 @@ if($pago->comprobante_path != null){
     {
         if (isset($request->texto)) {
             $cuentas = Cuenta::whereprovedor_id($request->texto)
-                             ->where('status','=', 1)->get();
+				 ->where('status','=', 1)->get();
             return response()->json(
                 [
                     'lista' => $cuentas,
@@ -257,8 +256,7 @@ if($pago->comprobante_path != null){
         $file = \storage::disk('pagos')->get($filename);
         return new Response($file, 200);
     }
-
-    public function getComprobante($filename)
+     public function getComprobante($filename)
     {
         $file = \storage::disk('pagos')->get($filename);
         return new Response($file, 200);
@@ -266,6 +264,6 @@ if($pago->comprobante_path != null){
 
     public function export()
     {
-        return Excel::download(new UsersExport, 'pagos marcelo padilla.xlsx');
+        return Excel::download(new pagosaExport, 'pagos aduocomer.xlsx');
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-Create Pago
+Editar Pago grupo padilla
 @endsection
 
 @section('content')
@@ -13,24 +13,29 @@ Create Pago
 
             <div class="card card-default">
                 <div class="card-header">
-                    <span class="card-title" style="color:#FFFFFF">Crear Pago</span>
+                    <span class="card-title" style="color:#FFFFFF">Editar Pago Grupo Padilla</span>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('pagos.store') }}" role="form" enctype="multipart/form-data">
+                    <form method="POST" action=" {{ route('pagogs.update',$pago->id) }}" role="form" enctype="multipart/form-data">
+                     {{ method_field('PATCH') }}
                         @csrf
 
-                        @include('pago.form')
+                        @include('pagog.form')
 
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+
+    </script>
 </section>
+
 <script>
     const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
     document.getElementById('provedor_id').addEventListener('change', (e) => {
-        fetch('rcuentas', {
+        fetch('rcuentassg', {
             method: 'POST',
             body: JSON.stringify({
                 texto: e.target.value

@@ -13,7 +13,7 @@ Create Provedor
 
             <div class="card card-default">
                 <div class="card-header">
-                    <span class="card-title" style="color:#FFFFFF">Crear Provedor</span>
+                    <span class="card-title" style="color:#FFFFFF">Crear Proveedor</span>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('provedors.store') }}" role="form"

@@ -10,7 +10,7 @@
         </div>
         <!--  <div class="form-group">
             {{ Form::label('provedor') }}
-            {{ Form::select('provedor_id',$provedores, $pago->provedor_id, ['class' => 'form-control' . ($errors->has('provedor_id') ? ' is-invalid' : ''), 'placeholder' => 'seleccione un proveedor']) }}
+            {{ Form::select('provedor_id',$provedores, $pago->provedor_id, ['class' => 'form-control' . ($errors->has('provedor_id') ? ' is-invalid' : ''), 'placeholder' => 'seleccione un provedor']) }}
             {!! $errors->first('provedor_id', '<div class="invalid-feedback">:message</div>') !!}
         </div> -->
         <!--     <div class="form-group">
@@ -29,9 +29,9 @@
 
 
         <div class="form-group">
-            {{ Form::label('proveedor') }}
+            {{ Form::label('provedor') }}
             <select name="provedor_id" id="provedor_id" class="form-control">
-                <option>Seleccionar provedor</option>
+                <option value="">Seleccionar provedor</option>
                 @foreach ($provedores as $item)
                 <option value="{{ $item->id }}" @if($pago->provedor_id=== $item->id) " selected='selected'
                     @endif>{{ $item->nombre }}
@@ -42,7 +42,7 @@
         <div class="form-group">
             {{ Form::label('cuentas') }}
             <select name="cuenta_id" id="cuenta_id" class="form-control">
-                <option>Selecciona una cuenta</option>
+                <option value="">Seleccionar provedor</option>
                 @foreach ($cuentas as $item)
                 <option value="{{ $item->id }}" @if($pago->cuenta_id=== $item->id) " selected='selected'
                     @endif>{{ $item->banco }}{{" : "}}{{ $item->cuenta }}
@@ -56,7 +56,7 @@
 
 
         <div class="form-group">
-            <label class="col-sm-2 col-form-label">{{ __('Fecha') }}</label>
+            <label class="col-sm-2 col-form-label">{{ __('fecha') }}</label>
             <div>
                 <div class="form-group{{ $errors->has('fecha') ? ' has-danger' : '' }}">
                     <input class="form-control{{ $errors->has('fecha') ? ' is-invalid' : '' }}" name="fecha"
@@ -109,7 +109,7 @@
         <div class="form-group">
             {{ Form::label('sube la factura a pagar') }}
 
-            <input type="file" name="pago_path" id="pago_path" class="form-control">
+            <input type="file" name="pago_path" id="pago_path" class="form-control"  >
 
         </div>
         <br>
@@ -122,13 +122,13 @@
         </div>
         <br>
         <div class="form-group">
-            {{ Form::label('obeservación') }}
-            {{ Form::text('obeservacion', $pago->obeservacion, ['class' => 'form-control' . ($errors->has('obeservacion') ? ' is-invalid' : ''), 'placeholder' => 'Obeservación']) }}
+            {{ Form::label('obeservacion') }}
+            {{ Form::text('obeservacion', $pago->obeservacion, ['class' => 'form-control' . ($errors->has('obeservacion') ? ' is-invalid' : ''), 'placeholder' => 'Obeservacion']) }}
             {!! $errors->first('obeservacion', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('status') }}
-        <select name="status" id="status" class="form-control"  required>
+            <select name="status" id="status" class="form-control">
 
 
                 <option value="">Seleccionar status</option>
@@ -141,7 +141,7 @@
 
             </select>
         </div>
-             <br>
+        <br>
 
         <div class="form-group">
             {{ Form::label('sube el comprobante de pago') }}
